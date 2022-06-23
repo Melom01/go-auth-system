@@ -1,0 +1,24 @@
+{
+  "Server": {
+    "Title": "Sentinel",
+    "Version": "0.1.0",
+    "Hostname": "localhost",
+    "Port": "8000"
+  },
+  "Database": {
+    "Username": "postgres",
+    "Password": "postgres",
+    "Hostname": "localhost",
+    "Name": "sentinel",
+    "Port": "5432"
+  },
+  "Emailer": {
+    "Sender": "no-reply@paradyle.com",
+    "EmailTitle": "Paradyle",
+    "Password": "Paradyl3Proj3ct_01",
+    "Encoding": "utf-8",
+    "Host": "smtp.zoho.eu",
+    "Port": 465,
+    "OTPLifeSpan": 15
+  }
+}
