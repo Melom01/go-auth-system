@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sentinel/config"
 	"sentinel/logger"
+	"sentinel/routing"
 )
 
 func main() {
@@ -16,6 +17,7 @@ func main() {
 		port     = config.Config.Server.Port
 	)
 
+	routing.SetupRouter(router)
 	logger.LogMessageInGreen("Starting server at: " + port)
 
 	if err := http.ListenAndServe(hostname+":"+port, router); err != nil {
