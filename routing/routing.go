@@ -3,11 +3,12 @@ package routing
 import (
 	"github.com/gorilla/mux"
 	"net/http"
+	"sentinel/controller"
 	"sentinel/logger"
 	"sentinel/middleware"
 )
 
-func SetupRouter(router *mux.Router) {
+func SetupRouter(router *mux.Router, ctrl controller.Controller) {
 	router.Use(middleware.LoggingMiddleware, middleware.RecoveryPanicMiddleware)
 
 	setupPingRouter(router)
