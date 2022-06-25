@@ -34,8 +34,6 @@ func SetupEmailer() *SMTPEmailer {
 		server.Encryption = mail.EncryptionNone
 	}
 
-	logger.LogMessageInGreen("Setup -> " + server.Encryption.String())
-
 	return &SMTPEmailer{
 		server: server,
 	}
