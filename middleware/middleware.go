@@ -23,7 +23,7 @@ func RecoveryPanicMiddleware(h http.Handler) http.Handler {
 					logger.LogMessageInRed("(PANIC) -> " + err.Error())
 					sendCustomError(w, err.Status(), err.Params())
 				} else {
-					logger.LogMessageInRed("(PANIC) -> panic was not a custom <application-name> error.")
+					logger.LogMessageInRed("(PANIC) -> this panic error was not a custom Sentinel application error")
 					err = apperror.ErrServerError("")
 					sendCustomError(w, err.Status(), err.Params())
 				}

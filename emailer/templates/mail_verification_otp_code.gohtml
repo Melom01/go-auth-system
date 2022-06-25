@@ -1,0 +1,27 @@
+{{ define "mail_verification_otp_code" }}
+    <body>
+    <h1>
+        <b>Verify your email address</b>
+    </h1>
+    <h4>
+        Hi {username}, you are trying to register the following email: {recipient_email} as new user for Paradyle. In
+        order to verify your identity, use the following code in the verify email screen:
+        <h2>
+            <b>
+                <p style="font-family:'Lucida Console', monospace">{{.otpCode}}</p>
+            </b>
+        </h2>
+    </h4>
+    <h4>
+        If it was not you who tried to sign up for Paradyle service, or you think an unauthorized person has logged in,
+        change your email address password immediately.
+    </h4>
+    <br>
+    <h4>
+        Thank you,
+        <br>
+        <br>
+        Paradyle Team
+    </h4>
+    </body>
+{{ end }}

@@ -6,6 +6,7 @@ import (
 	"sentinel/config"
 	"sentinel/controller"
 	"sentinel/database"
+	"sentinel/emailer"
 	"sentinel/logger"
 	"sentinel/routing"
 	"sentinel/service"
@@ -16,7 +17,8 @@ func main() {
 
 	var (
 		db       = database.SetupPostgresDatabase()
-		suw      = &service.ServicesUtilitiesWrapper{Database: db}
+		email    = emailer.SetupEmailer()
+		suw      = &service.ServicesUtilitiesWrapper{Database: db, Emailer: email}
 		ctrl     = controller.HTTPController{ServicesWrapper: suw}
 		router   = mux.NewRouter()
 		hostname = config.Config.Server.Hostname

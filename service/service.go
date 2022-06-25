@@ -1,15 +1,26 @@
 package service
 
-import "sentinel/database"
+import (
+	"sentinel/database"
+	"sentinel/emailer"
+)
 
 type ServicesWrapper interface {
-	DB() database.DBUtilitiesWrapper
+	EmailServices
+
+	GetDB() database.DBUtilitiesWrapper
+	GetEmailer() emailer.Emailer
 }
 
 type ServicesUtilitiesWrapper struct {
 	Database database.DBUtilitiesWrapper
+	Emailer  emailer.Emailer
 }
 
-func (suw *ServicesUtilitiesWrapper) DB() database.DBUtilitiesWrapper {
+func (suw *ServicesUtilitiesWrapper) GetDB() database.DBUtilitiesWrapper {
 	return suw.Database
+}
+
+func (suw *ServicesUtilitiesWrapper) GetEmailer() emailer.Emailer {
+	return suw.Emailer
 }

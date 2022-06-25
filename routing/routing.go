@@ -12,6 +12,11 @@ func SetupRouter(router *mux.Router, ctrl controller.Controller) {
 	router.Use(middleware.LoggingMiddleware, middleware.RecoveryPanicMiddleware)
 
 	setupPingRouter(router)
+	setupPublicRouter(router.PathPrefix("/api").Subrouter(), ctrl)
+}
+
+func setupPublicRouter(router *mux.Router, ctrl controller.Controller) {
+	setupEmailRouter(router.PathPrefix("/email").Subrouter(), ctrl)
 }
 
 func setupPingRouter(router *mux.Router) {

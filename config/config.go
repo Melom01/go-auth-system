@@ -34,6 +34,7 @@ type EmailerConfig struct {
 	EmailTitle  string
 	Password    string
 	Encoding    string
+	Encryption  string
 	Host        string
 	Port        int
 	OTPLifeSpan int
