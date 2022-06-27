@@ -1,0 +1,25 @@
+{
+  "Server": {
+    "Title": "Sentinel",
+    "Version": "0.1.0",
+    "Hostname": "localhost",
+    "Port": "8000"
+  },
+  "Database": {
+    "Username": "dbuser",
+    "Password": "dbpass",
+    "Hostname": "dbhost",
+    "Name": "dbname",
+    "Port": "1234"
+  },
+  "Emailer": {
+    "Sender": "email@sender.com",
+    "EmailTitle": "Email title",
+    "Password": "emailPass",
+    "Encoding": "utf-8",
+    "Encryption": "NONE",
+    "Host": "emailHost",
+    "Port": 123,
+    "OTPLifeSpan": 15
+  }
+}

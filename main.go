@@ -12,6 +12,11 @@ import (
 	"sentinel/service"
 )
 
+func Sum(x, y int) int {
+	z := x + y
+	return z
+}
+
 func main() {
 	config.SetupConfig()
 
