@@ -1,0 +1,16 @@
+image: golang:1.18-alpine
+
+stages:
+  - test
+
+before_script:
+  - mkdir -p /go/src/gitlab.com
+  - ln -s /builds/melomlab /go/src/gitlab.com/melomlab
+
+coverage:
+  stage: test
+  script:
+    - apk add --no-cache git build-base
+    - cd /go/src/gitlab.com/melomlab/sentinel
+    - go get ./...
+    - go test -cover -v ./...
