@@ -1,4 +1,4 @@
-package test_config
+package config_test
 
 import (
 	"encoding/json"
@@ -17,7 +17,7 @@ func TestConfig(t *testing.T) {
 	_, b, _, _ := runtime.Caller(0)
 	basePath := filepath.Dir(b)
 
-	if raw, err = ioutil.ReadFile(basePath + "/test_config.json"); err != nil {
+	if raw, err = ioutil.ReadFile(basePath + "/config_test.json"); err != nil {
 		log.Fatal("Unable to read configuration file: ", err)
 	}
 	if err = json.Unmarshal(raw, &config.Config); err != nil {
