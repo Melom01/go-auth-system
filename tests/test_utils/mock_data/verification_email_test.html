@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <title>Paradyle OTP verification</title>
+</head>
+<body>
+<h1><b>Verify your email address</b></h1>
+<h4>
+    Hi {{.Username}}, you are trying to register the following email: {{.RecipientEmail}} as new user for Paradyle. In order to verify your identity, use the following code in the verify email screen:
+    <h2>
+        <b>
+            <p style="font-family:'Lucida Console', monospace">{{.OtpCode}}</p>
+        </b>
+    </h2>
+</h4>
+<h4>
+    If it was not you who tried to sign up for Paradyle service, or you think an unauthorized person has logged in, change your email address password immediately.
+</h4>
+<br>
+<h4>
+    Thank you,
+    <br>
+    <br>
+    Paradyle Team
+</h4>
+</body>
+</html>
