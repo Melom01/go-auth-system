@@ -8,31 +8,35 @@ import (
 )
 
 type EmailServices interface {
-	SendVerificationEmail()
+	SendVerificationEmail(email model.Email) error
 }
 
-func (suw *ServicesUtilitiesWrapper) SendVerificationEmail() {
+func (suw *ServicesUtilitiesWrapper) SendVerificationEmail(email model.Email) error {
 	type Data struct {
-		Username       string
-		RecipientEmail string
-		OtpCode        string
+		Username      string
+		ReceiverEmail string
+		OtpCode       string
 	}
 
 	data := Data{
-		Username:       "usernameGeneric",
-		RecipientEmail: "mounir.progit@gmail.com",
-		OtpCode:        "123456",
+		Username:      email.Username,
+		ReceiverEmail: email.ReceiverEmail,
+		OtpCode:       "123456",
 	}
 
-	text := utils.CreateEmailFromTemplate("verification_email.html", data)
+	body := utils.CreateEmailFromTemplate("verification_email.html", data)
+	subject := "TEST SUBJECT"
 
 	err := suw.Emailer.SendEmail(config.Config.Emailer.Sender, model.Email{
-		Subject: "TEST SUBJECT",
-		Text:    text,
-		To:      "mounir.progit@gmail.com",
+		ReceiverEmail: email.ReceiverEmail,
+		Subject:       subject,
+		Body:          body,
 	})
+
 	if err != nil {
-		logger.LogFatalMessageInRed("An error occurred while sending the email. The error was: ", err)
-		return
+		logger.LogMessageInYellow("An error occurred while sending the email. The error was: " + err.Error())
+		return err
 	}
+
+	return nil
 }

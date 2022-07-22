@@ -1,6 +1,7 @@
 package emailer
 
 import (
+	"github.com/badoux/checkmail"
 	mail "github.com/xhit/go-simple-mail/v2"
 	"sentinel/config"
 	"sentinel/logger"
@@ -39,13 +40,36 @@ func SetupEmailer() *SMTPEmailer {
 	}
 }
 
+func validateEmail(email string) error {
+	err := checkmail.ValidateFormat(email)
+
+	if err != nil {
+		logger.LogMessageInYellow("Invalid email format. The email provided was: " + email)
+		return err
+	}
+
+	err = checkmail.ValidateHost(email)
+
+	if err != nil {
+		logger.LogMessageInYellow("Invalid email host. The email provided was: " + email)
+		return err
+	}
+
+	return nil
+}
+
 func (emailer *SMTPEmailer) SendEmail(sender string, emailData model.Email) error {
 	email := mail.NewMSG()
 
+	err := validateEmail(emailData.ReceiverEmail)
+	if err != nil {
+		return err
+	}
+
 	email.SetFrom(sender).
-		AddTo(emailData.To).
+		AddTo(emailData.ReceiverEmail).
 		SetSubject(emailData.Subject).
-		SetBody(mail.TextHTML, emailData.Text).
+		SetBody(mail.TextHTML, emailData.Body).
 		AddHeader("Content-Transfer-Encoding", "quoted-printable")
 
 	client, err := emailer.server.Connect()
