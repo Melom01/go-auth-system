@@ -7,6 +7,7 @@ import (
 
 type ServicesWrapper interface {
 	EmailServices
+	UserServices
 
 	GetDB() database.DBUtilitiesWrapper
 	GetEmailer() emailer.Emailer

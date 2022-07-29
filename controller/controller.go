@@ -4,6 +4,7 @@ import "sentinel/service"
 
 type Controller interface {
 	EmailController
+	UserController
 }
 
 type HTTPController struct {

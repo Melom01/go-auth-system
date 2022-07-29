@@ -12,6 +12,7 @@ type Configuration struct {
 	Server   ServerConfig
 	Database DatabaseConfig
 	Emailer  EmailerConfig
+	Keycloak KeycloakConfig
 }
 
 type ServerConfig struct {
@@ -38,6 +39,13 @@ type EmailerConfig struct {
 	Host        string
 	Port        int
 	OTPLifeSpan int
+}
+
+type KeycloakConfig struct {
+	Realm    string
+	BasePath string
+	Username string
+	Password string
 }
 
 func SetupConfig() {

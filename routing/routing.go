@@ -17,13 +17,14 @@ func SetupRouter(router *mux.Router, ctrl controller.Controller) {
 
 func setupPublicRouter(router *mux.Router, ctrl controller.Controller) {
 	setupEmailRouter(router.PathPrefix("/email").Subrouter(), ctrl)
+	setupUserRouter(router.PathPrefix("/user").Subrouter(), ctrl)
 }
 
 func setupPingRouter(router *mux.Router) {
 	router.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
 		_, err := w.Write([]byte("Server ON"))
 		if err != nil {
-			logger.LogMessageInRed("The server is not available.")
+			logger.LogMessageInRed("Server not available.")
 		}
 	})
 }
