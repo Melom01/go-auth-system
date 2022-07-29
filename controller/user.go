@@ -34,6 +34,8 @@ func (ctrl *HTTPController) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	err := ctrl.ServicesWrapper.CreateUser(user)
 	if err != nil {
-		w.WriteHeader(500)
+		// TODO: return 409 or 500 NOT statically
+		// See how to write header dynamically based on the error that you get
+		w.WriteHeader(409)
 	}
 }
