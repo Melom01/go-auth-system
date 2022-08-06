@@ -4,16 +4,16 @@ import (
 	"context"
 	"crypto/tls"
 	"github.com/Nerzal/gocloak/v11"
+	"sentinel/apperror"
 	"sentinel/config"
-	"sentinel/logger"
 	"sentinel/model"
 )
 
 type UserServices interface {
-	CreateUser(user model.User) error
+	CreateUser(user model.User)
 }
 
-func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) error {
+func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) {
 	var (
 		realm         = config.Config.Keycloak.Realm
 		basePath      = config.Config.Keycloak.BasePath
@@ -30,8 +30,7 @@ func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) error {
 
 	token, err := client.LoginAdmin(ctx, adminUsername, adminPassword, realm)
 	if err != nil {
-		logger.LogFatalMessageInRed("Login failed: ", err)
-		return err
+		apperror.ThrowError(apperror.ErrServerError("Unable to create Keycloak admin connection"))
 	}
 
 	var groups = []string{"Users"}
@@ -55,9 +54,6 @@ func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) error {
 
 	_, err = client.CreateUser(ctx, token.AccessToken, realm, gocloakUser)
 	if err != nil {
-		logger.LogMessageInRed("Cannot create user. The reason was: " + err.Error())
-		return err
+		apperror.ThrowError(apperror.ErrUserCreation(err.Error()))
 	}
-
-	return nil
 }
