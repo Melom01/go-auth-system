@@ -37,7 +37,7 @@ func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) error {
 	var groups = []string{"Users"}
 	var credentials = []gocloak.CredentialRepresentation{
 		{
-			// TODO -> Here you can also handle hash and salt. See how
+			// TODO: Here you can also handle hash and salt. See how
 			Temporary: gocloak.BoolP(false),
 			Value:     gocloak.StringP(user.Password),
 		},

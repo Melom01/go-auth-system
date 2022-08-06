@@ -12,22 +12,33 @@ type EmailServices interface {
 }
 
 func (suw *ServicesUtilitiesWrapper) SendVerificationEmail(email model.Email) error {
+	var (
+		otpLength = config.Config.Emailer.OTPLength
+		sender    = config.Config.Emailer.Sender
+		subject   = "Verify your email address"
+	)
+
 	type Data struct {
 		Username      string
 		ReceiverEmail string
 		OtpCode       string
 	}
 
+	otpCode, err := utils.GenerateOTP(otpLength)
+	if err != nil {
+		logger.LogMessageInRed("Cannot generate OTP code. The reason was: " + err.Error())
+		return err
+	}
+
 	data := Data{
 		Username:      email.Username,
 		ReceiverEmail: email.ReceiverEmail,
-		OtpCode:       "123456",
+		OtpCode:       otpCode,
 	}
 
 	body := utils.CreateEmailFromTemplate("verification_email.html", data)
-	subject := "TEST SUBJECT"
 
-	err := suw.Emailer.SendEmail(config.Config.Emailer.Sender, model.Email{
+	err = suw.Emailer.SendEmail(sender, model.Email{
 		ReceiverEmail: email.ReceiverEmail,
 		Subject:       subject,
 		Body:          body,

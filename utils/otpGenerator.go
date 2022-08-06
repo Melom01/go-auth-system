@@ -6,18 +6,16 @@ import (
 )
 
 func GenerateOTP(length int) (string, error) {
-	const otpChars = "1234567890"
-
 	buffer := make([]byte, length)
 	_, err := rand.Read(buffer)
 	if err != nil {
 		logger.LogMessageInRed("Not able to generate OTP code, cannot read buffer: " + err.Error())
 		return "", err
 	}
-	otpCharsLength := len(otpChars)
+	otpCharsLength := len(OtpChars)
 
 	for i := 0; i < length; i++ {
-		buffer[i] = otpChars[int(buffer[i])%otpCharsLength]
+		buffer[i] = OtpChars[int(buffer[i])%otpCharsLength]
 	}
 
 	return string(buffer), nil
