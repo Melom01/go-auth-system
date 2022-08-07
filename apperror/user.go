@@ -5,9 +5,9 @@ import (
 	"net/http"
 )
 
-func ErrUserCreation(message string) AppCustomError {
+func ErrUserAlreadyExist(message string) AppCustomError {
 	var (
-		code = "ERR_USER_CREATION"
+		code = "ERR_USER_ALREADY_EXIST"
 		msg  = fmt.Sprintf("%s: an error was thrown during the user creation process. The error was: '%s'.", code, message)
 	)
 

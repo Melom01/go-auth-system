@@ -25,6 +25,7 @@ func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) {
 	client := gocloak.NewClient(basePath, gocloak.SetAuthAdminRealms("admin/realms"), gocloak.SetAuthRealms("realms"))
 	restyClient := client.RestyClient()
 
+	// TODO: set debug dynamically from config.json file
 	restyClient.SetDebug(true)
 	restyClient.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 
@@ -54,6 +55,6 @@ func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) {
 
 	_, err = client.CreateUser(ctx, token.AccessToken, realm, gocloakUser)
 	if err != nil {
-		apperror.ThrowError(apperror.ErrUserCreation(err.Error()))
+		apperror.ThrowError(apperror.ErrUserAlreadyExist(err.Error()))
 	}
 }

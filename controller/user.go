@@ -6,7 +6,7 @@ import (
 )
 
 type UserController interface {
-	CreateUser(w http.ResponseWriter, r *http.Request)
+	CreateUser(_ http.ResponseWriter, r *http.Request)
 }
 
 type PostUser struct {
@@ -18,7 +18,7 @@ type PostUser struct {
 	Password  string `json:"password" validate:"required"`
 }
 
-func (ctrl *HTTPController) CreateUser(w http.ResponseWriter, r *http.Request) {
+func (ctrl *HTTPController) CreateUser(_ http.ResponseWriter, r *http.Request) {
 	var postUser PostUser
 
 	ctrl.DecodeBody(r, &postUser)
