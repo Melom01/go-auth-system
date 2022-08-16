@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"crypto/tls"
 	"github.com/Nerzal/gocloak/v11"
 	"sentinel/apperror"
 	"sentinel/config"
@@ -10,29 +9,38 @@ import (
 )
 
 type UserServices interface {
+	CheckIfUserAlreadyExist(username string, email string) string
 	CreateUser(user model.User)
 }
 
-func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) {
+func (suw *ServicesUtilitiesWrapper) CheckIfUserAlreadyExist(username string, email string) string {
 	var (
-		realm         = config.Config.Keycloak.Realm
-		basePath      = config.Config.Keycloak.BasePath
-		adminUsername = config.Config.Keycloak.Username
-		adminPassword = config.Config.Keycloak.Password
+		usernameFilter = gocloak.GetUsersParams{Username: gocloak.StringP(username)}
+		emailFilter    = gocloak.GetUsersParams{Email: gocloak.StringP(email)}
 	)
 
-	ctx := context.Background()
-	client := gocloak.NewClient(basePath, gocloak.SetAuthAdminRealms("admin/realms"), gocloak.SetAuthRealms("realms"))
-	restyClient := client.RestyClient()
+	usernameList := GetUsersByParams(usernameFilter)
+	emailList := GetUsersByParams(emailFilter)
 
-	// TODO: set debug dynamically from config.json file
-	restyClient.SetDebug(true)
-	restyClient.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
-
-	token, err := client.LoginAdmin(ctx, adminUsername, adminPassword, realm)
-	if err != nil {
-		apperror.ThrowError(apperror.ErrServerError("Unable to create Keycloak admin connection"))
+	if len(usernameList) > 0 && len(emailList) > 0 {
+		return "USERNAME_AND_EMAIL_EXIST"
+	} else if len(usernameList) > 0 {
+		return "USERNAME_EXIST"
+	} else if len(emailList) > 0 {
+		return "EMAIL_EXIST"
 	}
+
+	return ""
+}
+
+func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) {
+	// TODO: Make this a public struct to make it accessible in other points
+	var (
+		ctx    = context.Background()
+		client = GetGoCloakClient()
+		realm  = config.Config.Keycloak.Realm
+		token  = ConnectToKeycloak().AccessToken
+	)
 
 	var groups = []string{"Users"}
 	var credentials = []gocloak.CredentialRepresentation{
@@ -53,7 +61,7 @@ func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) {
 		Credentials: &credentials,
 	}
 
-	_, err = client.CreateUser(ctx, token.AccessToken, realm, gocloakUser)
+	_, err := client.CreateUser(ctx, token, realm, gocloakUser)
 	if err != nil {
 		apperror.ThrowError(apperror.ErrUserAlreadyExist(err.Error()))
 	}

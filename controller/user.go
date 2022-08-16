@@ -6,7 +6,19 @@ import (
 )
 
 type UserController interface {
+	CheckIfUserAlreadyExist(w http.ResponseWriter, r *http.Request)
 	CreateUser(_ http.ResponseWriter, r *http.Request)
+}
+
+func (ctrl *HTTPController) CheckIfUserAlreadyExist(w http.ResponseWriter, r *http.Request) {
+	var (
+		username = r.URL.Query().Get("username")
+		email    = r.URL.Query().Get("email")
+	)
+
+	response := ctrl.ServicesWrapper.CheckIfUserAlreadyExist(username, email)
+
+	SetJsonHeadersAndEncode(w, response)
 }
 
 type PostUser struct {
