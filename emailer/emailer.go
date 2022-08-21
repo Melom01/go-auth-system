@@ -9,7 +9,7 @@ import (
 )
 
 type Emailer interface {
-	SendEmail(sender string, emailData model.Email) error
+	SendEmail(sender string, emailData model.VerificationEmail) error
 }
 
 type SMTPEmailer struct {
@@ -58,16 +58,16 @@ func validateEmail(email string) error {
 	return nil
 }
 
-func (emailer *SMTPEmailer) SendEmail(sender string, emailData model.Email) error {
+func (emailer *SMTPEmailer) SendEmail(sender string, emailData model.VerificationEmail) error {
 	email := mail.NewMSG()
 
-	err := validateEmail(emailData.ReceiverEmail)
+	err := validateEmail(emailData.Email)
 	if err != nil {
 		return err
 	}
 
 	email.SetFrom(sender).
-		AddTo(emailData.ReceiverEmail).
+		AddTo(emailData.Email).
 		SetSubject(emailData.Subject).
 		SetBody(mail.TextHTML, emailData.Body).
 		AddHeader("Content-Transfer-Encoding", "quoted-printable")

@@ -22,8 +22,8 @@ func (ctrl *HTTPController) CheckIfUserAlreadyExist(w http.ResponseWriter, r *ht
 }
 
 type PostUser struct {
-	FirstName string `json:"firstName" validate:"required"`
-	LastName  string `json:"lastName" validate:"required"`
+	FirstName string `json:"first_name" validate:"required"`
+	LastName  string `json:"last_name" validate:"required"`
 	Email     string `json:"email" validate:"required"`
 	Enabled   *bool  `json:"enabled" validate:"required"`
 	Username  string `json:"username" validate:"required"`

@@ -9,19 +9,19 @@ type EmailController interface {
 	SendVerificationEmail(w http.ResponseWriter, r *http.Request)
 }
 
-type PostEmail struct {
-	ReceiverEmail string `json:"receiverEmail" validate:"required"`
-	Username      string `json:"username" validate:"required"`
+type PostVerificationEmail struct {
+	Email    string `json:"email" validate:"required"`
+	Username string `json:"username" validate:"required"`
 }
 
 func (ctrl *HTTPController) SendVerificationEmail(w http.ResponseWriter, r *http.Request) {
-	var postEmail PostEmail
+	var postEmail PostVerificationEmail
 
 	ctrl.DecodeBody(r, &postEmail)
 
-	email := model.Email{
-		ReceiverEmail: postEmail.ReceiverEmail,
-		Username:      postEmail.Username,
+	email := model.VerificationEmail{
+		Email:    postEmail.Email,
+		Username: postEmail.Username,
 	}
 
 	err := ctrl.ServicesWrapper.SendVerificationEmail(email)

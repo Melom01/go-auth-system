@@ -10,7 +10,7 @@ import (
 )
 
 type DBUtilitiesWrapper interface {
-	// TODO: add here ORM calls
+	UserDatabase
 }
 
 type PostgresDatabase struct {

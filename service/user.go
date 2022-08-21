@@ -30,6 +30,7 @@ func (suw *ServicesUtilitiesWrapper) CheckIfUserAlreadyExist(username string, em
 		return "EMAIL_EXIST"
 	}
 
+	// TODO -> Handle response
 	return ""
 }
 
@@ -65,4 +66,6 @@ func (suw *ServicesUtilitiesWrapper) CreateUser(user model.User) {
 	if err != nil {
 		apperror.ThrowError(apperror.ErrUserAlreadyExist(err.Error()))
 	}
+
+	suw.Database.DeleteOTPUserData(user.Username)
 }
