@@ -3,9 +3,10 @@ package service
 import (
 	"context"
 	"crypto/tls"
-	"github.com/Nerzal/gocloak/v11"
 	"sentinel/apperror"
 	"sentinel/config"
+
+	"github.com/Nerzal/gocloak/v11"
 )
 
 func GetGoCloakClient() gocloak.GoCloak {
@@ -15,8 +16,7 @@ func GetGoCloakClient() gocloak.GoCloak {
 }
 
 func ConnectToKeycloak() *gocloak.JWT {
-	// TODO: Make this a public struct to make it accessible in other points
-	// You can provide this variables with dependency injection (WIRE library)
+	// TODO: provide this variables with dependency injection (WIRE library)
 	var (
 		client        = GetGoCloakClient()
 		ctx           = context.Background()
