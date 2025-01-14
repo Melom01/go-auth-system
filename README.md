@@ -59,27 +59,16 @@ cd go-auth-system
 ```
 
 ### Set up dependencies
+
 Install Go modules:
 
 ```bash
 go mod tidy
 ```
 
----
-
 ## CONFIGURATION
 
-Update the `config.json` file with your configuration:
-```JSON
-
-```
-- **DB_HOST**: Database host. For example, **localhost** or **127.0.0.1**.
-- **DB_PORT**: Database port. For example, **5432**.
-- **DB_NAME**: Database name.
-- **DB_USER**: Database username.
-- **DB_PASSWORD**: Your password to access the database.
-- **FIREBASE_CREDENTIALS**: The path to your Firebase Admin SDK JSON file.
-
+Update the `config.json` file with your personal configuration
 
 ## USAGE
 
@@ -90,6 +79,7 @@ go run main.go
 ```
 
 ### Sort imports
+
 #### Making the `sort_imports.sh` script executable
 
 Before running the script for the first time, you need to make it executable. You can do this by running the following command in your terminal:
@@ -99,10 +89,12 @@ chmod +x sort_imports.sh
 This step is only required once.
 
 #### Running the script
+
 After making the script executable, you can sort all imports throughout the application by running:
 ```shell
 ./sort_imports.sh
 ```
+
 The script will automatically process all Go files, excluding any specified patterns (e.g., files with `_gen.go` in the di folder).
 Once completed, you will see a confirmation message.
 

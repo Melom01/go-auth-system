@@ -1,0 +1,28 @@
+{
+    "Server": {
+      "Title": "Auth System",
+      "Version": "0.1.0",
+      "Hostname": "localhost",
+      "Port": "8000"
+    },
+    "Database": {
+      "Username": "postgres",
+      "Password": "postgres",
+      "Hostname": "localhost",
+      "Name": "auth_system",
+      "Port": "5432"
+    },
+    "Emailer": {
+      "Host": "localhost",
+      "Port": 9000,
+      "Sender": "no-reply@sender.com",
+      "Password": "password"
+    },
+    "Keycloak": {
+      "Realm": "my_keycloak_realm",
+      "BasePath": "keycloak_base_path",
+      "Username": "username",
+      "Password": "password"
+    }
+  }
+  
